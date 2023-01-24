@@ -1,7 +1,11 @@
+#Todo:
+#create folders for files
+#create functions when everything works
+#Call the functions
+
 import requests
 import datetime
 import pandas as pd
-import matplotlib as plt
 
 today = datetime.date.today()
 #maybe for 3 day forecast?
@@ -10,16 +14,19 @@ tomorrow = datetime.date.today() + datetime.timedelta(days=2)
 #get url and raw JSON
 url = f"https://api.open-meteo.com/v1/forecast?latitude=63.79&longitude=20.28&hourly=temperature_2m,weathercode,windspeed_10m,winddirection_10m&windspeed_unit=ms&timezone=Europe%2FBerlin&start_date={today}&end_date={today}"
 returned_weather = requests.get(url)
-data = returned_weather.json()
-data = pd.json_normalize(data)
-data.to_json(f"raw_forecast_{today}.json")
+raw_df = returned_weather.json()
+raw_df = pd.json_normalize(raw_df)
+raw_df.to_json(f"raw_forecast_{today}.json")
 
 #drops unnecessary columns in JSON-file and formats timestamp to better suited format
 
-data = pd.read_json(f'forecast_harmonized.json')
+harmonizing_df = pd.read_json(f"raw_forecast_{today}".json)
 
-# data['time'] = pd.to_datetime(data['time'])
-# data['time'] = data['time'].dt.strftime('%Y-%m-%d_%H:%M:%S')
+harmonizing_df['time'] = pd.to_datetime(harmonizing_df['time'])
+harmonizing_df['time'] = harmonizing_df['time'].dt.strftime('%Y-%m-%d_%H:%M:%S')
+
+harmonizing_df.drop(columns=['latitude', 'longitude', 'generationtime_ms','utc_offset_seconds','timezone','timezone_abbreviation','elevation',
+'hourly_units.time','hourly_units.temperature_2m','hourly_units.weathercode','hourly_units.windspeed_10m','hourly_units.winddirection_10m'], inplace=True)
 
 # data.loc[data.weathercode == 0, 'weathercode'] = 'Cloudfree'
 # data.loc[data.weathercode == 1, 'weathercode'] = 'Mainly clear'
