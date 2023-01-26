@@ -8,7 +8,7 @@ import json
 
 today = date.today()
 def weather():
-    url_weather = f"https://api.open-meteo.com/v1/forecast?latitude=63.79&longitude=20.28&hourly=temperature_2m,weathercode&timezone=Europe%2FBerlin&start_date=2023-01-26&end_date=2023-01-26"
+    url_weather = f"https://api.open-meteo.com/v1/forecast?latitude=63.79&longitude=20.28&hourly=temperature_2m,weathercode,winddirection_10m&timezone=Europe%2FBerlin&start_date=2023-01-26&end_date=2023-01-26"
 
     returned_weathercode = requests.get(url_weather)
     data = returned_weathercode.json()
