@@ -29,7 +29,8 @@ def to_database():
         apparent_temperature = data[i]['apparent_temperature']
         winddirection_10m = data[i]['winddirection_10m']
         windspeed_10m = data[i]['windspeed_10m']
-        cur.execute("INSERT INTO one_day_forecast (time, temperature, apparent_temperature, weather_code, wind_direction, wind_speed) VALUES (to_timestamp(%s, 'YYYY-MM-DD-HH24:MI'), %s, %s, %s, %s,%s)", 
+        cur.execute("INSERT INTO one_day_forecast (time, temperature, apparent_temperature, weather_code, wind_direction, wind_speed)" + 
+        "VALUES (to_timestamp(%s, 'YYYY-MM-DD-HH24:MI'), %s, %s, %s, %s,%s)", 
         (time, temperature_2m, apparent_temperature, weathercode, winddirection_10m, windspeed_10m))
     conn.commit()
 

@@ -6,9 +6,8 @@ import os
 import pandas as pd
 import json
 
-
-
 today = date.today()
+
 def weather():
     url_weather = f"https://api.open-meteo.com/v1/forecast?latitude=63.79&longitude=20.28&hourly=temperature_2m,apparent_temperature,weathercode,windspeed_10m,winddirection_10m&timezone=Europe%2FBerlin&start_date=2023-01-27&end_date=2023-01-27"
 
@@ -51,6 +50,5 @@ def weather():
 
     file_path = os.path.join(harmonized_folder, weather_folder, f"harmonized_weather_{today}.json")
     df.to_json(file_path, orient="records")
-
 
 weather()
