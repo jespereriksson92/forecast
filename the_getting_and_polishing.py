@@ -1,3 +1,5 @@
+#complete
+
 import requests
 from datetime import date
 import os
@@ -8,7 +10,7 @@ import json
 
 today = date.today()
 def weather():
-    url_weather = f"https://api.open-meteo.com/v1/forecast?latitude=63.79&longitude=20.28&hourly=temperature_2m,weathercode,winddirection_10m&timezone=Europe%2FBerlin&start_date=2023-01-26&end_date=2023-01-26"
+    url_weather = f"https://api.open-meteo.com/v1/forecast?latitude=63.79&longitude=20.28&hourly=temperature_2m,apparent_temperature,weathercode,windspeed_10m,winddirection_10m&timezone=Europe%2FBerlin&start_date=2023-01-27&end_date=2023-01-27"
 
     returned_weather = requests.get(url_weather)
     data = returned_weather.json()
@@ -37,14 +39,14 @@ def weather():
     hourly = data['hourly']
     df = pd.DataFrame(hourly)
 
-    df['winddirection_10m'] = df['winddirection_10m'].replace(range(0,22), 'N')
-    df['winddirection_10m'] = df['winddirection_10m'].replace(range(23,68), 'NE')
-    df['winddirection_10m'] = df['winddirection_10m'].replace(range(69,114), 'E')
-    df['winddirection_10m'] = df['winddirection_10m'].replace(range(115,160), 'SE')
-    df['winddirection_10m'] = df['winddirection_10m'].replace(range(161,206), 'S')
-    df['winddirection_10m'] = df['winddirection_10m'].replace(range(207,252), 'SW')
-    df['winddirection_10m'] = df['winddirection_10m'].replace(range(253,294), 'W')
-    df['winddirection_10m'] = df['winddirection_10m'].replace(range(295,340), 'NW')
+    df['winddirection_10m'] = df['winddirection_10m'].replace(range(0,23), 'N')
+    df['winddirection_10m'] = df['winddirection_10m'].replace(range(23,69), 'NE')
+    df['winddirection_10m'] = df['winddirection_10m'].replace(range(69,115), 'E')
+    df['winddirection_10m'] = df['winddirection_10m'].replace(range(115,161), 'SE')
+    df['winddirection_10m'] = df['winddirection_10m'].replace(range(161,207), 'S')
+    df['winddirection_10m'] = df['winddirection_10m'].replace(range(207,253), 'SW')
+    df['winddirection_10m'] = df['winddirection_10m'].replace(range(253,295), 'W')
+    df['winddirection_10m'] = df['winddirection_10m'].replace(range(295,341), 'NW')
     df['winddirection_10m'] = df['winddirection_10m'].replace(range(341,359), 'N')
 
     file_path = os.path.join(harmonized_folder, weather_folder, f"harmonized_weather_{today}.json")
