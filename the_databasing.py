@@ -19,7 +19,7 @@ def to_database():
     map_weathercode = {0: 'Clear', 1:'Mainly clear',2:'Partly cloudy',3:'overcast',51:'Light drizzle',53:'Moderate drizzle',
     71:'Slight snowfall',73:'Moderate snowfall',75:'Heavy snowfall'}
 
-    map_winddirection = 2
+    
 
     cur = conn.cursor()
 
